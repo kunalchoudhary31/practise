@@ -156,3 +156,38 @@ class TimeInterval:
             ValueError: If the subtraction results in a negative time interval.
         """
         return self.__sub__(other)
+
+    def add_seconds(self, seconds):
+        """
+        Adds a specified number of seconds to this TimeInterval object.
+
+        Args:
+            seconds (int): The number of seconds to add.
+
+        Returns:
+            TimeInterval: A new TimeInterval object representing the sum.
+        """
+        total_seconds = self.hours * 3600 + self.minutes * 60 + self.seconds + seconds
+
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        seconds = total_seconds % 60
+        return TimeInterval(hours=hours, minutes=minutes, seconds=seconds)
+
+    def subtract_seconds(self, seconds):
+        """
+        Subtracts a specified number of seconds from this TimeInterval object.
+
+        Args:
+            seconds (int): The number of seconds to subtract.
+
+        Returns:
+            TimeInterval: A new TimeInterval object representing the difference.
+        """
+        total_seconds = self.hours * 3600 + self.minutes * 60 + self.seconds - seconds
+        if total_seconds < 0:
+            raise ValueError("Subtraction results in a negative time interval.")
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        seconds = total_seconds % 60
+        return TimeInterval(hours=hours, minutes=minutes, seconds=seconds)
